@@ -1,0 +1,29 @@
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { GifsService } from '../services/gifs.service';
+
+@Component({
+  selector: 'app-busqueda',
+  templateUrl: './busqueda.component.html',
+  styles: [
+  ]
+})
+export class BusquedaComponent {
+
+  // Una forma de utilizar ViewChild para obtener el valor del html por medio de
+  // una referencia.
+  @ViewChild('txtBuscar') txtBuscar!: ElementRef<HTMLInputElement>;
+
+  constructor( private _gifsService: GifsService ) {}
+
+  buscar(): void{
+    const valor = this.txtBuscar.nativeElement.value;
+
+    if (valor.trim().length === 0){
+      return;
+    }
+
+    this._gifsService.buscarGifs( valor );
+
+    this.txtBuscar.nativeElement.value = '';
+  }
+}
